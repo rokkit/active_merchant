@@ -6,6 +6,11 @@ module ActiveMerchant #:nodoc:
       module Universal
         class Notification < ActiveMerchant::Billing::Integrations::Notification
 
+          def initialize(post, options = {})
+            super
+            @key = options[:credential2]
+          end
+
           def acknowledge(authcode = nil)
             @params.delete('x-signature') == generate_signature
           end
@@ -36,7 +41,7 @@ module ActiveMerchant #:nodoc:
 
           private
           def generate_signature
-            Universal.sign(@params, @options[:credential2])
+            Universal.sign(@params, @key)
           end
 
         end
