@@ -12,7 +12,8 @@ module ActiveMerchant #:nodoc:
           end
 
           def acknowledge(authcode = nil)
-            @params.delete('x-signature') == generate_signature
+            signature = @params.delete('x-signature')
+            signature == generate_signature
           end
 
           def item_id
@@ -32,7 +33,11 @@ module ActiveMerchant #:nodoc:
           end
 
           def status
-            @params['x-result']
+            case @params['x-result']
+              when 'success'; 'Completed'
+              when 'failure'; 'Failed'
+              when 'pending'; 'Pending'
+            end
           end
 
           def test?

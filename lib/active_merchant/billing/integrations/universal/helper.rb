@@ -6,7 +6,7 @@ module ActiveMerchant #:nodoc:
 
           def initialize(order, account, options = {})
             super
-            @key = options[:credential3]
+            @key = options[:credential2]
           end
 
           def generate_signature
